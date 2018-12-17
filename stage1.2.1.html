@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Move to Click Position</title>
+<style type="text/css">
+body {
+    background-color: #FFF;
+    margin: 30px;
+    margin-top: 10px;
+}
+#bg{
+    background-image:url(lvl1.2.1.png);
+    width: 800px;
+    height:599px;
+    overflow:hidden;
+    border: 5px black solid;
+}
+#hintergrundContainer {
+    position: absolute;
+    top:320px;
+    width: 800px;
+    height: 180px;
+    cursor: pointer;
+}
+
+#option1 {
+    position: absolute;
+    top:240px;
+    left:240px;
+    font-size:82px;
+}
+
+#textfeld{
+    width:800px;
+    height:100px;
+    background-color:black;
+    border:5px solid black;
+    color:white;
+    overflow:hidden;
+    text-align: justify;
+    font-size:22px;
+}
+</style>
+</head>
+
+<body>
+<div>
+  <a id="option1" >Game Over</a>
+</div>
+<div id="bg">
+<div id="hintergrundContainer">
+    <img id="spieler">
+</div>
+</div>
+<div id="textfeld">
+    <p>Du hast dich dazu entschieden den Leuten zu helfen. Leider konntest du dich desshalb nicht vor den Fliegerbomben retten und wurdest tötlich verletzt.</p>
+</div>
+
+<script></script>
+<script>
+var derspieler = document.querySelector("#spieler");
+var container = document.querySelector("#hintergrundContainer");
+
+container.addEventListener("click", getClickPosition, false);
+
+function getClickPosition(e) {
+    var parentPosition = getPosition(e.currentTarget);
+    var xPosition = e.clientX - parentPosition.x - (derspieler.clientWidth / 2);
+    var yPosition = e.clientY - parentPosition.y - (derspieler.clientHeight / 2);
+
+    derspieler.style.left = xPosition + "px";
+    derspieler.style.top = yPosition + "px";
+}
+
+// Helper function to get an element's exact position
+function getPosition(el) {
+  var xPos = 0;
+  var yPos = 0;
+
+  while (el) {
+    if (el.tagName == "BODY") {
+      // deal with browser quirks with body/window/document and page scroll
+      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+      var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+      xPos += (el.offsetLeft - xScroll + el.clientLeft);
+      yPos += (el.offsetTop - yScroll + el.clientTop);
+    } else {
+      // for all other non-BODY elements
+      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+    }
+
+    el = el.offsetParent;
+  }
+  return {
+    x: xPos,
+    y: yPos
+  };
+}
+</script>
+</body>

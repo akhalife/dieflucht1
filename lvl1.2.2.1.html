@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Move to Click Position</title>
+<style type="text/css">
+body {
+    background-color: #FFF;
+    margin: 30px;
+    margin-top: 10px;
+}
+#bg{
+    background-image:url(lvl1.2.2.png);
+    width: 800px;
+    height:599px;
+    overflow:hidden;
+    border: 5px black solid;
+}
+#hintergrundContainer {
+    position: absolute;
+    top:320px;
+    width: 800px;
+    height: 180px;
+    cursor: pointer;
+}
+#spieler {
+    position: relative;
+    left: 20px;
+    top: 10px;
+    background-image: url(players.png);
+    width:213px;
+    height:300px;
+    animation:walk-east 0.5s steps(2) infinite;
+    transition: left .5s linear, top .5s linear;
+}
+@keyframes walk-east {
+    from{background-position:0px;}
+    to{background-position:-425px;}
+}
+#option1 {
+    position: absolute;
+    top:145px;
+    left:210px;
+    height:150px;
+    width:200px;
+    background-image:url(sprechb.png);
+    cursor:grab;
+}
+#option2{
+    position: absolute;
+    top:250px;
+    left:350px;
+    height:250px;
+    width:130px;
+    background-image:url(aziz.png);
+    cursor:grab;
+}
+#textfeld{
+    width:800px;
+    height:100px;
+    background-color:black;
+    border:5px solid black;
+    color:white;
+    overflow:hidden;
+    text-align: justify;
+    font-size:22px;
+}
+</style>
+</head>
+
+<body>
+<div>
+  <a id="option1" ></a>
+  <a id="option2" ></a>
+</div>
+<div id="bg">
+<div id="hintergrundContainer">
+    <img id="spieler">
+</div>
+</div>
+<div id="textfeld">
+    <p>Aziz:"Ich werde von hier abhauen. Habe mir ein Ticket in die Türkei gekauft. Von da aus versuche ich weiter nach Europa zu reisen.Willst du mich begleiten?"</br>Willst du mit Aziz flüchten oder dich der Assyrischen Armee anschließen? </p>
+</div>
+
+<script></script>
+<script>
+var derspieler = document.querySelector("#spieler");
+var container = document.querySelector("#hintergrundContainer");
+
+container.addEventListener("click", getClickPosition, false);
+
+function getClickPosition(e) {
+    var parentPosition = getPosition(e.currentTarget);
+    var xPosition = e.clientX - parentPosition.x - (derspieler.clientWidth / 2);
+    var yPosition = e.clientY - parentPosition.y - (derspieler.clientHeight / 2);
+
+    derspieler.style.left = xPosition + "px";
+    derspieler.style.top = yPosition + "px";
+}
+
+// Helper function to get an element's exact position
+function getPosition(el) {
+  var xPos = 0;
+  var yPos = 0;
+
+  while (el) {
+    if (el.tagName == "BODY") {
+      // deal with browser quirks with body/window/document and page scroll
+      var xScroll = el.scrollLeft || document.documentElement.scrollLeft;
+      var yScroll = el.scrollTop || document.documentElement.scrollTop;
+
+      xPos += (el.offsetLeft - xScroll + el.clientLeft);
+      yPos += (el.offsetTop - yScroll + el.clientTop);
+    } else {
+      // for all other non-BODY elements
+      xPos += (el.offsetLeft - el.scrollLeft + el.clientLeft);
+      yPos += (el.offsetTop - el.scrollTop + el.clientTop);
+    }
+
+    el = el.offsetParent;
+  }
+  return {
+    x: xPos,
+    y: yPos
+  };
+}
+</script>
+</body>
+</html>
