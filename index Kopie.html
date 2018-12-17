@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Class Structure</title>
+
+    <script src = "script/student.js"></script>
+    <script src = "script/script.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<div id="content">
+</div>
+
+<script>
+    var studentCounter = 1;
+</script>
+
+
+
+
+<button id="btn1" onclick="updateButton('btn1',window.studentCounter);
+studentCounter++;">BUTTON A</button>
+<button id="btn2" onclick="window.updateButton('btn2',window.studentCounter);
+studentCounter++;">BUTTON B</button>
+
+</body>
+</html>
